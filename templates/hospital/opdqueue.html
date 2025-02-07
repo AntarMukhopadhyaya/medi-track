@@ -1,0 +1,38 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-5">
+  <h1>OPD Queue - {{hospital.name}}</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Assigned To</th>
+        <th scope="col">Added At</th>
+        {% if user.role == "doctor"  %}
+        <th scope="col">Action</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for opd_queue in opd_patients %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+          {{ opd_queue.patient.first_name }} {{ opd_queue.patient.last_name }}
+        </td>
+        <td>{{ opd_queue.patient.email }}</td>
+        <td> Dr.{{opd_queue.doctor.first_name}} {{opd_queue.doctor.last_name}}</td>
+        <td>{{ opd_queue.created_at }}</td>
+        {% if user.role == "doctor"  %}
+        <td>
+          <a  class="btn btn-primary">Create Prescription</a>
+        </td>
+        
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

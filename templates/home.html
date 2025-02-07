@@ -1,0 +1,9 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+    <h1>Hospitals</h1>
+ {% for hospital in hospitals  %}
+   {%include "partials/hospitalCard.html"%}
+ {% endfor %}
+</div>
+
+{% endblock content %}
