@@ -1,5 +1,5 @@
 {% extends "layout.html" %} {% block content %}
-<div class="container mt-5">
+{% comment %} <div class="container mt-5">
   <h1>OPD Queue - {{hospital.name}}</h1>
   <table class="table">
     <thead>
@@ -9,30 +9,28 @@
         <th scope="col">Email</th>
         <th scope="col">Assigned To</th>
         <th scope="col">Added At</th>
-        {% if user.role == "doctor"  %}
+        <th scope="col">Status</th>
+        {% if user.role == "doctor" %}
         <th scope="col">Action</th>
         {% endif %}
       </tr>
     </thead>
-    <tbody>
-      {% for opd_queue in opd_patients %}
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>
-          {{ opd_queue.patient.first_name }} {{ opd_queue.patient.last_name }}
-        </td>
-        <td>{{ opd_queue.patient.email }}</td>
-        <td> Dr.{{opd_queue.doctor.first_name}} {{opd_queue.doctor.last_name}}</td>
-        <td>{{ opd_queue.created_at }}</td>
-        {% if user.role == "doctor"  %}
-        <td>
-          <a  class="btn btn-primary">Create Prescription</a>
-        </td>
-        
-        {% endif %}
-      </tr>
-      {% endfor %}
+    <tbody id="opd-queue" hx-get="{% url 'opd_queue_update' hospital.id %}" hx-trigger="every 1s" hx-swap="innerHTML">
+   
     </tbody>
   </table>
+</div> {% endcomment %}
+
+
+<div class="container mt-5">
+  <h1 class="mb-4">🩺 OPD Queue - {{hospital.name}}</h1>
+  
+  <div class="row" id="opd-queue" hx-get="{% url 'opd_queue_update' hospital.id %}" hx-trigger="every 2s" hx-swap="innerHTML">
+    
+    
+    
+  </div>
 </div>
+
+
 {% endblock content %}

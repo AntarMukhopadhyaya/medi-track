@@ -1,0 +1,40 @@
+
+
+
+{% for opd_queue in opd_patients %}
+<div class="col-md-4">
+  <div class="card shadow-sm p-3 mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">👤 {{opd_queue.patient.first_name }} {{ opd_queue.patient.last_name }}</h5>
+      <span class="badge {% if opd_queue.priority == 1 %} bg-danger {% elif opd_queue.priority == 2 %} bg-warning {% else %} bg-primary {% endif %}">
+        {% if opd_queue.priority == 1 %} Urgent {% elif opd_queue.priority == 2 %} Medium {% else %} Normal {% endif %}
+      </span>
+    </div>
+    <p class="text-muted mb-1"><i class="fas fa-envelope"></i> {{ opd_queue.patient.email }}</p>
+    <p class="text-muted"><i class="fas fa-user-md"></i> Assigned to: <strong>{{ opd_queue.doctor.first_name }} {{ opd_queue.doctor.last_name }}</strong></p>
+    <p class="small text-muted"><i class="fas fa-clock"></i> Added at: {{ opd_queue.created_at|date:"H:i A" }}</p>
+
+    <div class="d-flex justify-content-between">
+      <span class="badge {% if opd_queue.status == 'waiting' %} bg-secondary {% elif opd_queue.status == 'in_progress' %} bg-info {% else %} bg-success {% endif %}">
+        {{ opd_queue.status|title }}
+      </span>
+
+      {% if user.role == "doctor" %}
+     
+      <a class="btn btn-primary" href="{% url 'generate_prescription' opd_queue.id %}">Create Prescription</a>
+      <a
+        href=""
+        class="btn btn-outline-primary"
+        hx-get="{% url 'schedule_later' opd_queue.id%}"
+        hx-target="#opd-queue"
+        >Schedule Later</a
+      >
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% empty %}
+<div class="col-md-12">
+  <div class="alert alert-info">No patients in the queue.</div>
+</div>
+{% endfor %}

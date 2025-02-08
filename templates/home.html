@@ -1,9 +1,13 @@
 {% extends "layout.html" %} {% block content %}
 <div class="container">
-    <h1>Hospitals</h1>
- {% for hospital in hospitals  %}
-   {%include "partials/hospitalCard.html"%}
- {% endfor %}
+    <h1 class="ml-4">Hospitals</h1>
+    <div class="d-flex flex-wrap">
+
+      {% for hospital in hospitals  %}
+      {%include "partials/hospitalCard.html"%}
+    {% endfor %}
+    </div>
+
 </div>
 
 {% endblock content %}

@@ -20,5 +20,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",views.home,name="home"),
+    path("appointments/",views.get_appointments,name="patient_appointments"),
     path("hospital/",include("hospital.urls")),
 ]

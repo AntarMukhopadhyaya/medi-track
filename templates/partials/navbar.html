@@ -7,35 +7,49 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
           </li>
+          {% if request.user.is_authenticated%}
+          {% if request.user.role == "doctor" %}
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="{% url 'doctor_dashboard' %}"></a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
+          {%endif %}
+          <a href="{% url "departments" %}" class="nav-link">Departments </a>
+          {% if request.user.role == "patient"%}
           <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="{% url 'patient_appointments' %}">Appointments</a>
           </li>
+          {% endif%}
+          {% endif %}
+
+         
         </ul>
         {%if request.user.is_authenticated %}
+        <div class="dropdown mx-2">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Hello  {{request.user.first_name}} !
+          </button>
+          <ul class="dropdown-menu">
+           
+            {% if request.user.role == "patient" %}
+            <li><a class="dropdown-item" href="#">My Prescriptions</a></li>
+            <li><a class="dropdown-item" href="{% url "patient_appointments" %}">Appointments</a></li>
+            {% elif request.user.role == "staff" or request.user.role == "admin" %}
+            <li><a class="dropdown-item" href="/admin">Admin Panel</a></li>
+            {% endif %}
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a href="{% url "logout" %}" class="dropdown-item">Logout</a></li>
+          </ul>
+        </div>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <a href="{% url "logout" %}" class="btn btn-outline-success">Logout</a>
+        
         {%else%}
         <div class="d-flex">
-        <span class=""> 
+        <span class="mx-3"> 
           <a href="{% url "register_user" %}" class="btn btn-outline-success">Register</a>
         </span>  
         <span class="ml-2"> 

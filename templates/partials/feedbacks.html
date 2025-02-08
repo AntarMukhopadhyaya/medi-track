@@ -1,0 +1,10 @@
+
+
+<h2>Feedback</h2>
+<ul>
+    {% for feedback in feedbacks %}
+        <li><strong>{{ feedback.recipient.username }}</strong>: ⭐ {{ feedback.rating }}/5 - "{{ feedback.comment }}"</li>
+    {% empty %}
+        <p>No feedback available.</p>
+    {% endfor %}
+</ul>

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-638+edqy5poo&-2&fe0a9sw6hl%&b696#%qa6!l7awlhjf51*f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -131,3 +131,13 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 AUTH_USER_MODEL = 'hospital.User'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mukhopadhyayaantar@gmail.com'
+EMAIL_HOST_PASSWORD = 'nfioyawvvcmwkjbk'
+
+# settings.py
+TIME_ZONE = "Asia/Kolkata"
+USE_TZ = True  # Keep this True if you're using PostgreSQL or other time zone-aware databases

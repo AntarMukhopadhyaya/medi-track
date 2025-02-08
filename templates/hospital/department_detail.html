@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}{{ department.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ department.name }}</h2>
+    <p>{{ department.description }}</p>
+
+    <h3>Doctors</h3>
+    <ul class="list-group">
+        {% for doctor in doctors %}
+            <li class="list-group-item">
+                <strong>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</strong>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No doctors in this department.</li>
+        {% endfor %}
+    </ul>
+
+    <h3 class="mt-4">Patients</h3>
+    <ul class="list-group">
+        {% for patient in patients %}
+            <li class="list-group-item">
+                <strong>{{ patient.first_name }} {{ patient.last_name }}</strong>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No patients in this department.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

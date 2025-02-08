@@ -19,23 +19,44 @@
       Book Appointment
     </button>
       {% endif %}
+      {% if request.user.is_authenticated%}
+      <a href=" {% url "opd_queue" hospital.id%}" class="btn btn-outline-success"
+   
+    >
+      View OPD
+    </a>
+      {% endif %}
      
     </div>
   </div>
   <div class="container">
-    <ul class="list-group">
-      {% for doctor in doctors %}
+    <h1>Doctors</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Department</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for doctor in doctors%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{doctor.first_name}} {{doctor.last_name}}</td>
+          <td>{{doctor.email}}</td>
+          <td>{{doctor.department.name}}</td>
+          <td> <a class="btn btn-outline-primary"> Feedback</a></td>
 
-      <li class="list-group-item">
-        <div class="d-flex justify-content-between">
-          <span>{{doctor.email}}</span>
-
-          <span> </span>
-        </div>
-      </li>
-
-      {% endfor %}
-    </ul>
+        </tr>
+        {% endfor %}
+       
+       
+      </tbody>
+    </table>
+   
   </div>
 </div>
 <!-- Modal -->
