@@ -1,0 +1,61 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-lg p-4">
+    <h2 class="text-center mb-4">📜 Prescription</h2>
+
+    <!-- Patient & Doctor Info -->
+    <div class="d-flex justify-content-between">
+      <div>
+        <h5>👤 Patient: {{ prescription.patient.first_name }} {{ prescription.patient.last_name }}</h5>
+        <p class="text-muted"><i class="fas fa-envelope"></i> {{ prescription.patient.email }}</p>
+      </div>
+      <div class="text-end">
+        <h5>🩺 Doctor: {{ prescription.doctor.first_name }} {{ prescription.doctor.last_name }}</h5>
+        <p class="text-muted"><i class="fas fa-hospital"></i> {{ prescription.doctor.specialization }}</p>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Prescription Details -->
+    <h4 class="mb-3">📝 Prescribed Medicines</h4>
+    <ul class="list-group mb-4">
+      {% for medicine in prescription.medicines.all %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="mb-1">{{ medicine.name }}</h6>
+          <small class="text-muted">Dosage: {{ medicine.dosage }}</small>
+          <br />
+          <small class="text-muted">Frequency: {{ medicine.frequency }}</small>
+        </div>
+        <span class="badge bg-primary">{{ medicine.duration }} days</span>
+      </li>
+      {% empty %}
+      <li class="list-group-item text-muted">No medicines prescribed.</li>
+      {% endfor %}
+    </ul>
+
+    <!-- Additional Instructions -->
+    {% if prescription.content %}
+    <div class="alert alert-info">
+      <h6 class="mb-1">📌 Additional Instructions</h6>
+      <p class="mb-0">{{ prescription.content }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Download & Back Buttons -->
+    <div class="d-flex justify-content-between mt-3">
+      {% comment %} <a href="{% url 'download_prescription' prescription.id %}" class="btn btn-danger">
+        <i class="fas fa-file-pdf"></i> Download PDF
+      </a>
+      <a href="{% url 'patient_dashboard' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back
+      </a> {% endcomment %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+

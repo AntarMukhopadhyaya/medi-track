@@ -10,6 +10,7 @@
         <th>Date</th>
         <th>Time</th>
         <th>Status</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
         <td>{{ appointment.date }}</td>
         <td>{{ appointment.time }}</td>
         <td>{{ appointment.status }}</td>
+        <td><a href="{% url "cancel_patient_appointments" appointment.id %}" class="btn btn-outline-danger ">Cancel Appointment</a>
       </tr>
       {% empty %}
       <tr>

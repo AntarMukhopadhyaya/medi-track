@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Search Results for "{{ query }}"</h2>
+
+    {% if not hospitals and not doctors %}
+        <div class="alert alert-danger">No results found!</div>
+    {% endif %}
+
+    {% if hospitals %}
+    <div class="mb-4">
+        <h3 class="text-primary">Hospitals</h3>
+        <div class="row">
+            {% for hospital in hospitals %}
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ hospital.name }}</h5>
+                        <p class="card-text">
+                            <strong>Location:</strong> {{ hospital.address }} <br />
+                            <strong>Contact:</strong> {{ hospital.phone }}
+                        </p>
+                        <a href="{% url 'show_hospital' hospital.id %}" class="btn btn-primary btn-sm">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if doctors %}
+    <div class="mb-4">
+        <h3 class="text-primary">Doctors</h3>
+        <div class="row">
+            {% for doctor in doctors %}
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
+                        <p class="card-text">
+                            <strong>Specialization:</strong> {{ doctor.department.name }} <br />
+                            <strong>Hospital:</strong> {{ doctor.hospital.name }} <br />
+                            <strong>Experience:</strong> {{ doctor.profile.experience }} years
+                        </p>
+                        <a href="{% url 'show_hospital' doctor.hospital.id %}" class="btn btn-primary btn-sm">
+                            View Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -89,7 +89,7 @@
             <label>Doctor</label>
             <select class="form-select" name="doctor">
               {% for doctor in doctors%}
-              <option value={{doctor.id}}>{{doctor.email}}</option>
+              <option value={{doctor.id}}>Dr.{{doctor.first_name}} {{doctor.last_name}} ({{doctor.department.name}})</option>
               {% endfor %}
             </select>
 

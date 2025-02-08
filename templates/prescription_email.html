@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; }
+        h2 { color: #2C3E50; }
+        .details { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Prescription from Dr. {{ prescription.doctor.first_name}}</h2>
+        <p>Hello {{ prescription.patient.first_name }} {{prescription.patient.last_name}}</p>
+        <p>Your doctor has created a prescription for you. Below are the details:</p>
+        <div class="details">
+            <p><strong>Age:</strong> {{ prescription.age }}</p>
+            <p><strong>Weight:</strong> {{ prescription.weight }} kg</p>
+            <p><strong>Medicines:</strong> {{ prescription.medicines.all|join:", " }}</p>
+            <p><strong>Notes:</strong> {{ prescription.content }}</p>
+        </div>
+        <p>Please visit the hospital for further guidance.</p>
+        <p>Regards, <br>{{ prescription.hospital.name }}</p>
+    </div>
+</body>
+</html>

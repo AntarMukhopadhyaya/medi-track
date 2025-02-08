@@ -70,6 +70,7 @@ class Hospital(models.Model):
     email = models.EmailField(unique=True)
     website = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    image = models.ImageField(upload_to="hospital_images",blank=True,null=True)
 
     def __str__(self):
         return self.name
@@ -109,6 +110,10 @@ class Appointment(models.Model):
         super().save(*args, **kwargs)
         self.add_patient_to_queue()
 
+    def remove_patient_from_queue(self):
+        OPDQueue.objects.filter(
+            hospital=self.hospital, patient=self.patient, doctor=self.doctor).first().delete()
+
     def add_patient_to_queue(self):
         OPDQueue.objects.create(hospital=self.hospital,
                                 patient=self.patient, doctor=self.doctor)
@@ -147,6 +152,16 @@ class BedQueue(models.Model):
         return f"{self.hospital.name} - {self.patient.email} - {self.priority} - {self.created_at}"
 
 
+class Medicine(models.Model):
+    name = models.CharField(max_length=255)  # Medicine name
+    dosage = models.CharField(max_length=100)  # Example: "500mg"
+    frequency = models.CharField(max_length=100)  # Example: "Twice a day"
+    duration = models.IntegerField()  # Number of days
+
+    def __str__(self):
+        return f"{self.name} ({self.dosage})"
+
+
 class Prescription(models.Model):
     id = models.AutoField(primary_key=True)
     patient = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -156,7 +171,14 @@ class Prescription(models.Model):
     age = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
     content = models.TextField()
+    medicines = models.ManyToManyField(Medicine, null=True)  # Link medicine
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at"]
+
+    def __str__(self):
+        return f"Patient: {self.patient.first_name} {self.patient.last_name} Doctor: {self.doctor.first_name} {self.doctor.last_name}"
 
 
 class Feedback(models.Model):

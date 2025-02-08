@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db.models import Q
 from django.contrib.auth.admin import UserAdmin
 from django.utils import timezone
-from .models import User, Hospital, Appointment, OPDQueue, Feedback, Department
+from .models import User, Hospital, Appointment, OPDQueue, Feedback, Department, Medicine, Prescription
 from django.db.models import Count
 from datetime import datetime
 from django.utils.html import format_html
@@ -16,17 +16,17 @@ class CustomUserAdmin(UserAdmin):
                     'hospital', "monthly_appointments", 'abha_id')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal Info', {'fields': ('hospital', 'role')}),
+        ('Personal Info', {'fields': ('hospital', 'role',"department")}),
         ('Permissions', {'fields': ('is_active', 'is_staff',
          'is_superuser')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('first_name', 'last_name', 'email', 'password1', 'password2', 'hospital', 'role', 'is_staff', 'is_superuser')}
+            'fields': ('first_name', 'last_name', 'email', "department", 'password1', 'password2', 'hospital', 'role', 'is_staff', 'is_superuser')}
          ),
     )
-    search_fields = ('email', 'first_name', 'last_name', 'abha_id')
+    search_fields = ('email', 'first_name', 'last_name', 'abha_id',"department")
     ordering = ('email', 'first_name', 'last_name')
 
     def get_queryset(self, request):
@@ -73,7 +73,7 @@ class AppointmentStatusFilter(admin.SimpleListFilter):
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ("patient", "doctor", "date", "time", "status")
+    list_display = ("patient", "doctor", "date", "time", "status","created_at")
     list_filter = ("date", "time", "status")  # Add default and status filters
     search_fields = ("patient__email", "patient__first_name", "patient__last_name",
                      # Fix: Required for autocomplete
@@ -87,3 +87,14 @@ admin.site.register(Hospital)
 admin.site.register(OPDQueue)
 admin.site.register(Feedback)
 admin.site.register(Department)
+admin.site.register(Medicine)
+
+
+@admin.register(Prescription)
+class PrescriptionAdmin(admin.ModelAdmin):
+    list_display = ("patient", "doctor", "hospital",
+                    "age", "weight", "created_at")
+    list_filter = ("age", "weight", "created_at")
+    search_fields = ("patient__first_name", "patient__email", "patient__last_name",
+                     "patient__abha_id", "doctor__email", "doctor__first_name", "doctor__last_name")
+    ordering = ["-created_at"]

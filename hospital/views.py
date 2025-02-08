@@ -3,27 +3,11 @@ from django.contrib.auth.models import Group
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Hospital, OPDQueue, BedQueue, User,Feedback,Prescription,Department
+from .models import Hospital, OPDQueue, BedQueue, User,Feedback,Prescription,Department,Medicine,Appointment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils.timezone import now
 
-
-
-def is_admin(user):
-    return user.groups.filter(name='Admin').exists()
-
-
-def is_doctor(user):
-    return user.groups.filter(name='Doctor').exists()
-
-
-def is_staff(user):
-    return user.groups.filter(name='Staff').exists()
-
-
-def is_patient(user):
-    return user.groups.filter(name='Patient').exists()
 
 
 @login_required
@@ -96,6 +80,7 @@ def department_detail(request, department_id):
 def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
+        messages.success(request,"Successfully logged out.")
         return redirect("home")
     return redirect("home")
 
@@ -215,6 +200,7 @@ def schedule_later(request, queue_id):
 @login_required
 def generate_prescription(request,queue_id):
     queue = get_object_or_404(OPDQueue, id=queue_id)
+    medicines = Medicine.objects.all().order_by('name')
     if request.method == "POST":
         age = request.POST.get('age')
         content = request.POST.get('content')
@@ -230,12 +216,13 @@ def generate_prescription(request,queue_id):
             content=content
         ):
             queue.status = "completed"
+            queue.save()
             messages.success(request, "Prescription generated successfully!")
             return redirect('opd_queue', hospital_id=queue.hospital.id)
         else:
             messages.error(request, "Failed to generate prescription!")
             return redirect('opd_queue', hospital_id=queue.hospital.id)
-    return render(request, 'hospital/generate_prescription.html', {'queue': queue})
+    return render(request, 'hospital/generate_prescription.html', {'queue': queue,"medicines":medicines})
 
 
 @login_required 
@@ -253,3 +240,5 @@ def doctor_dashboard(request):
     else:
         return redirect('home')
 
+
+    

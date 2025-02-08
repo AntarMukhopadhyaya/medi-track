@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="ml-4">Prescriptions</h1>
+    <div class="d-flex flex-wrap">
+        {% for prescription in prescriptions %}
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Prescription ID: {{ prescription.id }}</h5>
+                <p class="card-text">Patient Name: {{ prescription.patient.first_name  }} {{prescription.patient.last_name}}</p>
+                <p class="card-text">Doctor Name: {{ prescription.doctor.first_name }} {{prescription.doctor.last_name}}</p>
+                <p class="card-text">Created At: {{ prescription.created_at }}</p>
+                <a href="{% url 'show_prescription' prescription.id %}" class="btn btn-primary">View Prescription</a>
+                {% comment %} <a href="{% url 'edit_prescription' prescription.id %}" class="btn btn-primary">Edit Prescription</a> {% endcomment %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+
+
+{% endblock content %}
+
+
+

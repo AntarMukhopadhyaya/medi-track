@@ -28,6 +28,23 @@
         req
       />
     </div>
+
+    <div class="mb-3">
+      <label for="medicines" class="form-label">Medicines</label>
+      <select class="form-select" id="medicines" name="medicines" multiple required>
+        {% for medicine in medicines %}
+          <option value="{{ medicine.id }}" {% if medicine.id in form.medicines.value %}selected{% endif %}>
+            {{ medicine.name }} ({{ medicine.dosage }}) - {{ medicine.frequency }}
+          </option>
+        {% endfor %}
+      </select>
+      <small class="text-muted">Hold Ctrl (Windows) / Command (Mac) to select multiple medicines.</small>
+      <div class="mt-2">
+        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMedicineModal">
+          + Add New Medicine
+        </button>
+      </div>
+    </div>
     <div class="form-group my-2">
       <label class="form-label">Prescription Content </label>
       <textarea class="form-control" name="content" required></textarea>

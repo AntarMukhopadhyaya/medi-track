@@ -1,5 +1,8 @@
 <div class="card m-5" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
+  {%if hospital.image %}
+  <img src="{{hospital.image.url}}" class="card-img-top" alt="...">
+  {% endif %}
+   
     <div class="card-body">
       <h5 class="card-title"><a href="{% url "show_hospital" hospital.id %}">{{hospital.name}}</a></h5>
       <p class="card-text">{{hospital.address}}</p>

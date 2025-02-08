@@ -1,31 +1,11 @@
 {% extends "layout.html" %} {% block content %}
-{% comment %} <div class="container mt-5">
-  <h1>OPD Queue - {{hospital.name}}</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Assigned To</th>
-        <th scope="col">Added At</th>
-        <th scope="col">Status</th>
-        {% if user.role == "doctor" %}
-        <th scope="col">Action</th>
-        {% endif %}
-      </tr>
-    </thead>
-    <tbody id="opd-queue" hx-get="{% url 'opd_queue_update' hospital.id %}" hx-trigger="every 1s" hx-swap="innerHTML">
-   
-    </tbody>
-  </table>
-</div> {% endcomment %}
+
 
 
 <div class="container mt-5">
   <h1 class="mb-4">🩺 OPD Queue - {{hospital.name}}</h1>
   
-  <div class="row" id="opd-queue" hx-get="{% url 'opd_queue_update' hospital.id %}" hx-trigger="every 2s" hx-swap="innerHTML">
+  <div class="row" id="opd-queue" hx-get="{% url 'opd_queue_update' hospital.id %}" hx-trigger="every 5s" hx-swap="innerHTML">
     
     
     

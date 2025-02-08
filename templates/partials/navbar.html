@@ -33,7 +33,7 @@
           <ul class="dropdown-menu">
            
             {% if request.user.role == "patient" %}
-            <li><a class="dropdown-item" href="#">My Prescriptions</a></li>
+            <li><a class="dropdown-item" href="{% url 'patient_prescriptions'%}">My Prescriptions</a></li>
             <li><a class="dropdown-item" href="{% url "patient_appointments" %}">Appointments</a></li>
             {% elif request.user.role == "staff" or request.user.role == "admin" %}
             <li><a class="dropdown-item" href="/admin">Admin Panel</a></li>
@@ -42,8 +42,8 @@
             <li><a href="{% url "logout" %}" class="dropdown-item">Logout</a></li>
           </ul>
         </div>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" role="search" action="{% url 'search' %}" method="GET">
+          <input class="form-control me-2" type="search" placeholder="Search" name="q" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         
