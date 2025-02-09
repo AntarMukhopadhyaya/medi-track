@@ -1,26 +1,36 @@
-Software Requirements Specification (SRS)
+Medi-Track: Hospital Management System
 
-Hospital Management System
+Overview
 
-1. Introduction
+Medi-Track is a web-based Hospital Management System designed to streamline patient appointment scheduling, doctor-patient interactions, and administrative management. Built using Django, Bootstrap, Tailwind CSS, and SQL, this system enhances hospital efficiency by automating appointment booking, queue management, and prescription generation.
 
-1.1 Purpose
+Features
 
-The Hospital Management System (HMS) is designed to streamline patient appointment scheduling, enhance doctor-patient interactions, and improve administrative efficiency. This system provides a seamless experience for patients, doctors, and administrators by integrating advanced scheduling, live queue management, and online prescription generation.
+Admin
 
-1.2 Scope
+Add and delete doctors.
 
-The HMS will:
+Confirm appointment requests for OPD.
 
-Allow patients to book appointments and view queue status.
+Monitor live queue status in real-time.
 
-Enable doctors to manage their appointment queues and reschedule delayed patients.
+Doctor
 
-Provide admins with tools to manage doctors, confirm appointment requests, and monitor live queues.
+View patient queue in the doctor portal.
 
-Generate digital prescriptions that are emailed to patients.
+Reschedule delayed patients by pushing them to the end of the queue.
 
-1.3 Technology Stack
+Generate online prescriptions and send them as PDFs via email.
+
+Patient
+
+Book appointments online.
+
+View live queue status.
+
+Receive digital prescriptions via email.
+
+Technology Stack
 
 Frontend: Bootstrap, Tailwind CSS
 
@@ -28,104 +38,64 @@ Backend: Django
 
 Database: SQL
 
-2. Functional Requirements
+Installation
 
-2.1 Actors and Their Functionalities
+Prerequisites
 
-2.1.1 Admin
+Python (v3.8 or later)
 
-Add and delete doctors from the system.
+Django
 
-Confirm appointment requests for Outpatient Department (OPD).
+PostgreSQL/MySQL (or SQLite for development)
 
-Monitor live queue status in real time.
+Setup Instructions
 
-2.1.2 Doctor
+Clone the repository:
 
-View patient queue through the doctor portal.
+git clone https://github.com/AntarMukhopadhyaya/medi-track.git
 
-Reschedule patients in case of delays, pushing them to the end of the queue.
+Navigate to the project directory:
 
-Generate online prescriptions after consultation.
+cd medi-track
 
-Ensure prescriptions are automatically emailed to patients in PDF format.
+Install dependencies:
 
-2.1.3 Patient
+pip install -r requirements.txt
 
-Book appointments for OPD consultations.
+Run database migrations:
 
-View live queue status.
+python manage.py migrate
 
-Receive digital prescriptions via email.
+Start the development server:
 
-3. System Features
+python manage.py runserver
 
-3.1 Appointment Management
+Access the application at http://127.0.0.1:8000/
 
-Patients can book appointments through an intuitive interface.
+Usage
 
-Admin approval is required for appointment confirmation.
+Admins log in to manage doctors and confirm appointments.
 
-Doctors can see their queue in real time.
+Doctors log in to manage queues and generate prescriptions.
 
-3.2 Queue Management
+Patients book appointments and receive digital prescriptions.
 
-Live queue status is visible to both patients and doctors.
+Contribution
 
-Doctors can reschedule patients who are delaying and move them to the last position in the queue.
+Contributions are welcome! Fork the repository, make necessary changes, and submit a pull request.
 
-Admin can monitor queue progression and ensure smooth operations.
+License
 
-3.3 Prescription Management
+This project is licensed under the MIT License.
 
-Doctors can generate online prescriptions after consultation.
+Contact
 
-The system will generate prescriptions in PDF format.
+For inquiries, contact us at ndas20997@gmail.com.
 
-Patients receive prescriptions via email automatically.
 
-3.4 Admin Panel
 
-Admin can add or remove doctors from the system.
 
-The panel provides real-time insights into queue management.
 
-4. Non-Functional Requirements
 
-4.1 Performance
 
-The system should handle simultaneous appointment requests efficiently.
 
-Queue updates should be reflected in real time.
-
-4.2 Security
-
-Role-based authentication for Admin, Doctor, and Patient.
-
-Secure storage of patient records and prescription data.
-
-4.3 Usability
-
-Intuitive UI for patients, doctors, and admins.
-
-Mobile-responsive design using Bootstrap and Tailwind CSS.
-
-4.4 Scalability
-
-The system should support future expansion to additional hospital departments.
-
-5. System Architecture
-
-5.1 Overview
-
-Frontend: Built using Bootstrap and Tailwind CSS for a clean and responsive UI.
-
-Backend: Django handles authentication, database operations, and business logic.
-
-Database: SQL stores patient records, appointment details, and prescriptions.
-
-Email Integration: Prescriptions are automatically emailed to patients as PDFs.
-
-6. Conclusion
-
-The Hospital Management System aims to enhance operational efficiency and improve patient care by integrating real-time queue management, appointment scheduling, and digital prescriptions. Built on a robust tech stack, the system ensures smooth interactions between patients, doctors, and administrators.
