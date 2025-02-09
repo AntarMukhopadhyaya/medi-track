@@ -5,7 +5,7 @@
 <div class="container mt-5">
   <h1 class="mb-4">🩺 OPD Queue - {{hospital.name}}</h1>
   
-  <div class="row" id="opd-queue" hx-get="{% url 'opd_queue_update' hospital.id %}" hx-trigger="every 5s" hx-swap="innerHTML">
+  <div class="row" id="opd-queue" hx-get="{% url 'opd_queue_update' hospital.id %}" hx-trigger="every 3s" hx-swap="innerHTML">
     
     
     

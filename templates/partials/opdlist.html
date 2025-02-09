@@ -22,12 +22,12 @@
       {% if user.role == "doctor" and  user.email == opd_queue.doctor.email %}
      
       <a class="btn btn-primary" href="{% url 'generate_prescription' opd_queue.id %}">Create Prescription</a>
-      <button
+      <a
     
         class="btn btn-outline-primary"
-        hx-get="{% url 'schedule_later' opd_queue.hospital.id%}"
+        hx-get="{% url 'schedule_later' opd_queue.id %}"
         hx-target="#opd-queue"
-        >Schedule Later</button
+        >Schedule Later</a
       >
       {% endif %}
     </div>
